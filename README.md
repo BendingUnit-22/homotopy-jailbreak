@@ -4,11 +4,11 @@ This repo contains the evaluation for an anon EMNLP submission.
 ## Prerequisite
 We first create a conda environment and then install some necessary packages:
 
-conda create -n homotopy python=3.11.8
+```conda create -n homotopy python=3.11.8```
 
-conda activate homotopy
+```conda activate homotopy```
 
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 ## Model fine tuning
 We use [huggingface SFT Trainer](https://huggingface.co/docs/trl/en/sft_trainer) to fine tune the model.
