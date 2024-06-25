@@ -32,4 +32,4 @@ To download the base models from hugging face, there are two options:
 ## Running H-GCG and H-AutoDAN
 Create a `models` folder in the main directory and store all models there. 
 
-Run the appropriate bash script for a given model and method. You can modify the GPU device used in the `.sh` script itself.
+Run the appropriate bash script for a given model and method, found in `h-gcg` and `h-autodan`. You can modify the GPU device used in the `.sh` script itself.
