@@ -176,6 +176,8 @@ def get_args():
     parser.add_argument("--log_interval", type=int, default=5)
     parser.add_argument("--warm_start", type=bool, default=False)
     parser.add_argument("--warm_start_path", type=str, default=None)
+    parser.add_argument("--base_model", type=str, default=None)
+    parser.add_argument("--judge", type=str, default=None)
 
     args = parser.parse_args()
     return args
@@ -201,6 +203,7 @@ if __name__ == '__main__':
     device = f'cuda:{args.device}'
 
     path = args.model
+    if path[-1]=='/': path = path[:-1]
     template_name = args.template
     assert template_name=='llama2'
     save_name = args.save_name    
@@ -224,7 +227,7 @@ if __name__ == '__main__':
     if 'lora' in path.split('/')[-1] or 'lora' in path.split('/')[-2] or 'Lora' in path.split('/')[-1]:
         print("Loading LoRA weights...")
         model = AutoModelForCausalLM.from_pretrained(
-            pretrained_model_name_or_path="/nobackup4/hooda/models/Llama-2-7b-chat-hf", 
+            pretrained_model_name_or_path=args.base_model, 
             device_map=device, 
             torch_dtype=torch.bfloat16, 
             attn_implementation='flash_attention_2', 
@@ -246,8 +249,8 @@ if __name__ == '__main__':
     
     
     # Load HarmBench judge
-    judge_cls = AutoModelForCausalLM.from_pretrained("/nobackup3/divyam/models/HarmBench-Llama-2-13b-cls", torch_dtype=torch.bfloat16, device_map="auto")
-    judge_tokenizer = AutoTokenizer.from_pretrained("/nobackup3/divyam/models/HarmBench-Llama-2-13b-cls", use_fast=False, truncation_side="left", padding_side="left")
+    judge_cls = AutoModelForCausalLM.from_pretrained(args.judge, torch_dtype=torch.bfloat16, device_map="auto")
+    judge_tokenizer = AutoTokenizer.from_pretrained(args.judge, use_fast=False, truncation_side="left", padding_side="left")
     
     conv_template = load_conversation_template(template_name)
 
@@ -270,7 +273,7 @@ if __name__ == '__main__':
     # Load saved data, if available...
     if args.start!=0:
         print("Loading saved data...")
-        big_fp = f"/nobackup3/divyam/data/break-lora/gcg_lora_results/{template_name}/autodan_{path.split('/')[-1]}_{save_name}_advbench_0_{args.start - 1}.json"
+        big_fp = f"../data/{template_name}/autodan_{path.split('/')[-1]}_{save_name}_advbench_0_{args.start - 1}.json"
         try:
             saved_data = load_data(big_fp)
             iterations = saved_data['iterations']
@@ -290,7 +293,6 @@ if __name__ == '__main__':
     # Load warm start data, if available...
     if args.warm_start:
         assert args.warm_start_path!=None
-        # warm_start_data_path = "/nobackup3/divyam/data/break-lora/gcg_lora_results/llama2/autodan_Llama-2-7b-chat-hf_cold_start_advbench_0_500.json"
         warm_start_data_path = args.warm_start_path
         temp_data = load_data(warm_start_data_path)
         budget_from_prev_ckpt = temp_data['budget_for_next_ckpt'][args.start:args.end]
@@ -469,7 +471,7 @@ if __name__ == '__main__':
                 "budget_for_next_ckpt": budget_for_next_ckpt,
                 "losses": all_losses,
             }
-            big_fp = f"/nobackup3/divyam/data/break-lora/gcg_lora_results/{template_name}/autodan_{path.split('/')[-1]}_{save_name}_advbench_{args.start}_{i}.json"
+            big_fp = f"../data/{template_name}/autodan_{path.split('/')[-1]}_{save_name}_advbench_{args.start}_{i}.json"
 
             with open(big_fp, 'w') as fp:
                 json.dump(dataset, fp, indent=2, sort_keys=True)
@@ -486,7 +488,7 @@ if __name__ == '__main__':
         "budget_for_next_ckpt": budget_for_next_ckpt,
         "losses": all_losses,
     }
-    big_fp = f"/nobackup3/divyam/data/break-lora/gcg_lora_results/{template_name}/autodan_{path.split('/')[-1]}_{save_name}_advbench_0_520_start_{args.start}_end_{args.end}.json"
+    big_fp = f"../data/{template_name}/autodan_{path.split('/')[-1]}_{save_name}_advbench_0_520_start_{args.start}_end_{args.end}.json"
     
     with open(big_fp, 'w') as fp:
         json.dump(dataset, fp, indent=2, sort_keys=True)
