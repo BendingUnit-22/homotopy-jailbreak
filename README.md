@@ -24,9 +24,11 @@ We use ```--model_path``` to specify where the base model is stored and ```--mod
 One can also change the fine-tuning batch size using flag ```--batch_size``` and also ```--epochs``` to specify how many epochs are desired for the fine-tuning. 
 
 ```--check_steps``` is used to specify how frequently the model checkpoint is saved. In this project, we use LoRA fine-tuning to tune the base model. By default, the LoRA checkpoint adapters are saved in ```./adapter``` directory.
-
 ```
 To download the base models from hugging face, there are two options:
 1. [Recommended] Install git-lfs. Then, git clone the huggingface url of the model at the desired PATH.
 2. Specify the desired path via the HF_HOME env variable.
 ```
+## Running H-GCG and H-AutoDAN
+Create a `models` folder in the main directory and store all models there. 
+Run the appropriate bash script for a given model and method.
