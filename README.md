@@ -107,7 +107,7 @@ The final output will be a json file, in this format:
 ```
 1. `completions`: is a list with the completions to adversarial inputs.
 2. `tasks`: is a list of harmful instructions from AdvBench.
-3. `goals`: is a list of target completions used as part of GCG.
+3. `goals`: is a list of target completions used as part of GCG and AutoDAN
 4. `iterations`: is a list of the total iterations taken to find a jailbreak for every task.
 5. `losses`: is a list of lists, where each element list tracks the change in loss for a given prompt as the suffix is optimized.
 6. `adv_strings`: is a list of adversarial suffixes that either succeeded or failed at the end of available iterations.
