@@ -45,6 +45,7 @@ This will run H-AutoDAN on 1 example for the specified finetuned model, base mod
 2. `FINETUNED_MODEL_PATH` should point to the directory containing checkpoints obtained from finetuning.
 3. `BASE_MODEL_PATH` should point to the base model directory (either Llama-2-7b-chat-hf or Zephyr-R2D2).
 4. `JUDGE_PATH` should point to the [HarmBench judge model](https://huggingface.co/cais/HarmBench-Llama-2-13b-cls).
+5. `END` controls how many samples are included in the run, starting from index 0.
 
 The final output will be a json file, in this format:
 ```
