@@ -30,6 +30,16 @@ To download the base models from hugging face, there are two options:
 2. Specify the desired path via the HF_HOME env variable.
 ```
 ## Running H-GCG and H-AutoDAN
-Create a `models` folder in the main directory and store all models there. 
+Create a `models` folder in the main directory and store all models, including the finetuned models with checkpoints, there. 
 
 Run the appropriate bash script for a given model and method, found in `h-gcg` and `h-autodan`. You can modify the GPU device used in the `.sh` script itself.
+
+### H-GCG
+You will need to specify the model being used for a particular run in the respective config file, under the `model` field. It is recommended that the default finetuned model names be used, which are `ft_1_all_lora_llama` and `ft_1_all_lora_zep` for Llama-2 and Zephyr-R2D2 respectively. 
+
+If you do have to change the model names, you will need to change the `gcg_warm_start_path` field in the config files as well. Please take a look at the save name conventions at [`gcg_llama_dynamic_budget`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/6716ff38eed4f8b60d12960aa443a68385cd4d49/h-gcg/gcg_llama_dynamic_budget.py#L573) and [`gcg_zephyr_dynamic_budget`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/6716ff38eed4f8b60d12960aa443a68385cd4d49/h-gcg/gcg_zephyr_dynamic_budget.py#L591)
+
+### H-AutoDAN
+You will need to specify the model being used for a particular run in the `.sh` script itself. It is recommended that the default finetuned model names be used, which are `ft_1_all_lora_llama` and `ft_1_all_lora_zep` for Llama-2 and Zephyr-R2D2 respectively.
+
+If you do have to change the model names, you will need to change `--warm_start_path` in `.sh` scripts as well. Please look at the save name conventions at [`autodan_hga_eval_llama_lora_tiered_dynamic_budgeting.py`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/6716ff38eed4f8b60d12960aa443a68385cd4d49/h-autodan/autodan_hga_eval_llama_lora_tiered_dynamic_budgeting.py#L489) and [`autodan_hga_eval_zephyr_lora_tiered_dynamic_budgeting.py`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/6716ff38eed4f8b60d12960aa443a68385cd4d49/h-autodan/autodan_hga_eval_zephyr_lora_tiered_dynamic_budgeting.py#L496).
