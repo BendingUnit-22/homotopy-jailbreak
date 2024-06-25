@@ -1,11 +1,11 @@
 {
     "stage": "gcg_regular",
-    "model": "../models/Llama-2-7b-chat-hf",
+    "model": "{model_path}",
     "save_name": "warm_start_40_iter_from_40", 
     "template": "llama2",
     "stopping_criteria": "harmbench_judge",
     "gcg_warm_start": true,
-    "gcg_warm_start_path": "/nobackup3/divyam/data/break-lora/gcg_lora_results/llama2/custom_gcg_checkpoint-40_ft_1_all_lora_llama_warm_start_40_iter_from_100_advbench_0_520_start_0_end_1.json",
+    "gcg_warm_start_path": "../data/llama2/custom_gcg_checkpoint-40_ft_1_all_lora_llama_warm_start_40_iter_from_100_advbench_0_520_start_0_end_1.json",
     "get_completions": true,
     "prefix_regular_prompt_template": "[INST] {perturbation} {input} [/INST] {output}",
     "suffix_regular_prompt_template": "[INST] {input} {perturbation} [/INST] {output}",

@@ -1,6 +1,6 @@
 {
     "stage": "gcg_regular",
-    "model": "../models/zephyr_7b_r2d2",
+    "model": "{model_path}",
     "save_name": "warm_start_40_iter_from_40", 
     "template": "zephyr",
     "stopping_criteria": "harmbench_judge",

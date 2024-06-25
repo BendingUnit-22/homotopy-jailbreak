@@ -393,12 +393,25 @@ def main():
     # Args.
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str)
+    parser.add_argument("--finetuned_model_path", type=str)
+    parser.add_argument("--base_model_path", type=str)
+    parser.add_argument("--judge_path", type=str)
+    parser.add_argument("--dataset_end_idx", type=int, default=1)
     args = parser.parse_args()
 
     # Load config.
     config = json.load(open(args.config, "r"))
+    finetuned_model_path = args.finetuned_model_path
+    base_model_path = args.base_model_path
+    dataset_end_idx = args.dataset_end_idx
+    judge_path = args.judge_path
+    
+    if finetuned_model_path[-1]=='/': finetuned_model_path = finetuned_model_path[:-1]
+    if base_model_path[-1]=='/': base_model_path = base_model_path[:-1]
+    
+    config['model'] = config['model'].format(model_path=finetuned_model_path)
+    config['dataset_end_idx'] = dataset_end_idx
     print(config)
-
     
     # Stopping criteria lookup
     lookup_dict = {
@@ -434,7 +447,7 @@ def main():
     if 'lora' in path.split('/')[-1] or 'lora' in path.split('/')[-2] or 'Lora' in path.split('/')[-1]:
         print("Loading LoRA weights...")
         model = AutoModelForCausalLM.from_pretrained(
-            pretrained_model_name_or_path="../models/Llama-2-7b-chat-hf", 
+            pretrained_model_name_or_path=base_model_path, 
             device_map=device, 
             torch_dtype=torch.bfloat16, 
             attn_implementation='flash_attention_2', 
@@ -468,8 +481,8 @@ def main():
     
     # Load harmbench judge
     if config['stopping_criteria']=='harmbench_judge':
-        judge_cls = AutoModelForCausalLM.from_pretrained("../models/HarmBench-Llama-2-13b-cls", torch_dtype=torch.bfloat16, device_map="auto")
-        judge_tokenizer = AutoTokenizer.from_pretrained("../models/HarmBench-Llama-2-13b-cls", use_fast=False, truncation_side="left", padding_side="left")
+        judge_cls = AutoModelForCausalLM.from_pretrained(judge_path, torch_dtype=torch.bfloat16, device_map="auto")
+        judge_tokenizer = AutoTokenizer.from_pretrained(judge_path, use_fast=False, truncation_side="left", padding_side="left")
     
     
     # Budget for attack iters.

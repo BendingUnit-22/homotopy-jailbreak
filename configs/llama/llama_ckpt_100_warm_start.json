@@ -1,6 +1,6 @@
 {
     "stage": "gcg_regular",
-    "model": "../models/ft_1_all_lora_llama/checkpoint-100",
+    "model": "{model_path}",
     "save_name": "ft_1_all_lora_llama_warm_start_40_iter_from_200", 
     "template": "llama2",
     "stopping_criteria": "harmbench_judge",

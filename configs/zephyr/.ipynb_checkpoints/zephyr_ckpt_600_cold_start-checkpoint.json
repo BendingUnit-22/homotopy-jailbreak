@@ -1,6 +1,6 @@
 {
     "stage": "gcg_regular",
-    "model": "../models/ft_1_all_lora_zep/checkpoint-600",
+    "model": "{model_path}",
     "save_name": "ft_1_all_lora_zep_cold_start_40_iter", 
     "template": "zephyr",
     "stopping_criteria": "harmbench_judge",
