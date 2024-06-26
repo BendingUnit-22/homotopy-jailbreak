@@ -47,7 +47,7 @@ This will run H-AutoDAN on 1 example for the specified finetuned model, base mod
 4. `JUDGE_PATH` should point to the [HarmBench judge model](https://huggingface.co/cais/HarmBench-Llama-2-13b-cls).
 5. `END` controls how many samples are included in the run, starting from index 0.
 
-The final output will be a json file, in this format:
+The final output for H-GCG will be a json file saved in `data/llama2` or `data/zephyr`, in the following format:
 ```
 {
   "adv_strings": [
@@ -111,3 +111,5 @@ The final output will be a json file, in this format:
 4. `iterations`: is a list of the total iterations (iteration index) taken to find a jailbreak for every task.
 5. `losses`: is a list of lists, where each element list tracks the change in loss for a given prompt as the suffix is optimized.
 6. `adv_strings`: is a list of adversarial suffixes that either succeeded or failed at the end of available iterations.
+
+The output for H-AutoDAN will be identical, with an additional field `adv_string_pop`, which is a list of lists, containing the 256 candidate suffixes at the last iteration for each input prompt.
