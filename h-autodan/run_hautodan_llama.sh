@@ -1,5 +1,5 @@
 # 600->200->100->40->base
-DEVICE=3
+DEVICE=0
 TEMPLATE=llama2
 START=0
 END=1
