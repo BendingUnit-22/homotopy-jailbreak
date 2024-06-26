@@ -402,6 +402,7 @@ def main():
     parser.add_argument("--config", type=str)
     parser.add_argument("--finetuned_model_path", type=str)
     parser.add_argument("--base_model_path", type=str)
+    parser.add_argument("--judge_path", type=str)
     parser.add_argument("--dataset_end_idx", type=int, default=1)
     args = parser.parse_args()
 
