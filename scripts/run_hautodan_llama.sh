@@ -7,7 +7,7 @@ STEPS=40
 
 
 ### Cold start, 600
-MODEL=../models/ft_1_all_lora_llama/checkpoint-600
+MODEL=../adapter/llama_1/checkpoint-600
 SAVE_NAME=ft_1_all_lora_llama_cold_start_40_iter
 
 CUDA_VISIBLE_DEVICES=${DEVICE} python3 autodan_hga_eval_llama_lora_tiered_dynamic_budgeting.py \
