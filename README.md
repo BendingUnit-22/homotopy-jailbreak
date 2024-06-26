@@ -47,7 +47,7 @@ This will run H-AutoDAN on 1 example for the specified finetuned model, base mod
 4. `JUDGE_PATH` should point to the [HarmBench judge model](https://huggingface.co/cais/HarmBench-Llama-2-13b-cls).
 5. `END` controls how many samples are included in the run, starting from index 0.
 
-The final output for H-GCG will be a json file saved in `data/llama2` or `data/zephyr`, in the following format:
+The final output for H-GCG (and H-AutoDAN) will be a json file saved in `data/llama2` or `data/zephyr`, in the following format:
 ```
 {
   "adv_strings": [
