@@ -4,7 +4,7 @@ TEMPLATE=zephyr
 START=0
 END=1
 STEPS=40
-FINETUNED_MODEL_PATH=../models/ft_1_all_lora_zep
+FINETUNED_MODEL_PATH=../adapter/zep_1
 BASE_MODEL_PATH=../models/zephyr_7b_r2d2
 JUDGE_PATH=../models/HarmBench-Llama-2-13b-cls
 

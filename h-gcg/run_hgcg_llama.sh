@@ -1,5 +1,5 @@
 DEVICE=0
-FINETUNED_MODEL_PATH=../models/ft_1_all_lora_llama
+FINETUNED_MODEL_PATH=../adapter/llama_1
 BASE_MODEL_PATH=../models/Llama-2-7b-chat-hf
 JUDGE_PATH=../models/HarmBench-Llama-2-13b-cls
 END=1
