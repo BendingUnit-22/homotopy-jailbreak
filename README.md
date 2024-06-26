@@ -30,7 +30,7 @@ To download the base models from hugging face, there are two options:
 2. Specify the desired path via the HF_HOME env variable.
 ```
 ## Running H-GCG and H-AutoDAN
-Run the appropriate bash script for a given model and method, found in `h-gcg` and `h-autodan`. You can modify the GPU device, finetuned model path, base model path and judge model path in the `.sh` script itself.
+Run the appropriate bash script for a given model and method, found in `h-gcg` and `h-autodan`. You can modify the GPU device, finetuned model path, base model path and judge model path in the `.sh` script itself. By default, the script will run homotopy attacks over checkpoints 600->200->100->40 and then finally the base model.
 
 ```
 bash run_hgcg_llama.sh
@@ -113,3 +113,5 @@ The final output for H-GCG (and H-AutoDAN) will be a json file saved in `data/ll
 6. `adv_strings`: is a list of adversarial suffixes that either succeeded or failed at the end of available iterations.
 
 The output for H-AutoDAN will be identical, with an additional field `adv_string_pop`, which is a list of lists, containing the 256 candidate suffixes at the last iteration for each input prompt.
+
+You can change which checkpoints are being used by modifying the scripts. Note that you might have to change `gcg_warm_start_path` in the H-GCG config files, or `WARM_START_PATH` in the H-AutoDAN `.sh` scripts as well.
