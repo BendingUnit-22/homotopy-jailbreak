@@ -44,8 +44,8 @@ bash run_hautodan_llama.sh
 This will run H-AutoDAN on 1 example for the specified finetuned model, base model and judge.
 
 1. `DEVICE` changes the GPU device used.
-2. [`FINETUNED_MODEL_PATH`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/984b6e0dd89848ba46099ddd21beca440c624415/h-gcg/run_hgcg_llama.sh#L2) should point to the directory containing checkpoints obtained from finetuning. If you fine-tuned the model with `ft.py`, these checkpoints should be saved in `./adapter/zep_1` or `./adapter/llama_1`.
-3. [`BASE_MODEL_PATH`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/984b6e0dd89848ba46099ddd21beca440c624415/h-gcg/run_hgcg_llama.sh#L3) should point to the base model directory (either Llama-2-7b-chat-hf or Zephyr-R2D2). This is consistent with `LLAMA_PATH` when you fine-tune the model using `ft.py`.
+2. [`FINETUNED_MODEL_PATH`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/cbb43e541eaf4e28d462066316a2c9fa834f869f/h-gcg/run_hgcg_llama.sh#L2) should point to the directory containing checkpoints obtained from finetuning. If you fine-tuned the model with `ft.py`, these checkpoints should be saved in `./adapter/zep_1` or `./adapter/llama_1`.
+3. [`BASE_MODEL_PATH`](https://github.com/BendingUnit-22/homotopy-jailbreak/blob/cbb43e541eaf4e28d462066316a2c9fa834f869f/h-gcg/run_hgcg_llama.sh#L3) should point to the base model directory (either Llama-2-7b-chat-hf or Zephyr-R2D2). This is consistent with `LLAMA_PATH` when you fine-tune the model using `ft.py`.
 4. `JUDGE_PATH` should point to the [HarmBench judge model](https://huggingface.co/cais/HarmBench-Llama-2-13b-cls).
 5. `END` controls how many samples are included in the run, starting from index 0.
 
