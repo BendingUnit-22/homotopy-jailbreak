@@ -339,7 +339,7 @@ class GCGSolver:
                     prompt.tokens[prompt.perturbation_slice.stop:]
                 ], dim=0)
 
-            if i % log_interval == 0:
+            if i==0 or (i+1) % log_interval == 0:
                 all_success = True
                 while all_success:
                     for j, prompt in enumerate(prompts):
@@ -373,7 +373,7 @@ class GCGSolver:
                         else: completion = ""
                         perturbation_string = tokenizer.decode(
                             prompt.tokens[prompt.perturbation_slice.start - 1:prompt.perturbation_slice.stop + 1])
-                        return perturbation_string, i, completion, all_losses
+                        return perturbation_string, i, completion, all_losses, True
         else:
             print("Failed.")
             if get_completions:
@@ -386,7 +386,7 @@ class GCGSolver:
                 completion = tokenizer.batch_decode(completion[:, prompt.tokens.unsqueeze(0)[:, :prompt.output_slice.start].shape[1]:])[0].strip()
             else: completion = ""
             return tokenizer.decode(
-                prompts[0].tokens[prompts[0].perturbation_slice.start - 1:prompts[0].perturbation_slice.stop + 1]), i, completion, all_losses
+                prompts[0].tokens[prompts[0].perturbation_slice.start - 1:prompts[0].perturbation_slice.stop + 1]), i, completion, all_losses, False
 
 
 def main():
@@ -474,6 +474,7 @@ def main():
     completions = []
     losses = []
     budget_for_next_ckpt = []
+    successes = []
         
     judge_cls = None
     judge_tokenizer = None
@@ -524,7 +525,7 @@ def main():
         solver = GCGSolver()
         seed_everything(20)
         assert solver_config['num_steps']==40
-        perturbation_string, perturbation_iters, completion, all_losses = solver.attack(model=model,
+        perturbation_string, perturbation_iters, completion, all_losses, is_success = solver.attack(model=model,
                                             tokenizer=tokenizer,
                                             _prompts=_prompts,
                                             num_steps=solver_config['num_steps'] + budget_from_prev_ckpt[idx],
@@ -548,6 +549,7 @@ def main():
         completions.append(completion)
         losses.append(all_losses)
         budget_for_next_ckpt.append(solver_config['num_steps'] + budget_from_prev_ckpt[idx] - perturbation_iters - 1)
+        successes.append(is_success)
         print(f"Iterations: {perturbation_iters}")
         print(f"FINAL PERTURBATION:\n{perturbation_string}")
         print(completion)
@@ -565,6 +567,7 @@ def main():
                 "losses": losses,
                 "runtime": time.time()-gen_start_time,
                 "budget_for_next_ckpt": budget_for_next_ckpt,
+                "successes": successes,
             }
             big_fp = f"../data/{template}/custom_gcg_{path.split('/')[-1]}_{config['save_name']}_advbench_{config['dataset_start_idx']}_{idx}.json"
 
@@ -582,6 +585,7 @@ def main():
         "losses": losses,
         "runtime": time.time()-gen_start_time,
         "budget_for_next_ckpt": budget_for_next_ckpt,
+        "successes": successes,
     }
     big_fp = f"../data/{template}/custom_gcg_{path.split('/')[-1]}_{config['save_name']}_advbench_0_520_start_{config['dataset_start_idx']}_end_{config['dataset_end_idx']}.json"
     
